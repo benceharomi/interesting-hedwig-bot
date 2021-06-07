@@ -31,7 +31,7 @@ def wrong_command(update, context):
     update.message.reply_text('Sorry, I don\'t know that.')
 
 def task_1(update, context):
-    update.message.send_message('This is your first Task!')
+    update.message.reply_text('This is your first Task!')
 
 def error(update, context):
     """Log Errors caused by Updates."""
