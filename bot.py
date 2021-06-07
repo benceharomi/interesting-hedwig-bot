@@ -27,6 +27,12 @@ def echo(update, context):
     """Echo the user message."""
     update.message.reply_text(update.message.text)
 
+def wrong_command(update, context):
+    update.message.reply_text('Sorry, I don\'t know that.')
+
+def task_1(update, context):
+    update.message.send_message('This is your first Task!')
+
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -45,8 +51,9 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
 
-    # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    # on noncommand i.e message
+    dp.add_handler(MessageHandler(Filters.text, wrong_command))
+    dp.add_handler(MessageHandler(Filters.regex(r'(?i)/s*task/s*1/s*'), task_1))
 
     # log all errors
     dp.add_error_handler(error)
