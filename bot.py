@@ -7,7 +7,7 @@ import telebot
 
 load_dotenv()
 TOKEN = os.environ['API_KEY']
-bot = telebot.TeleBot(TOKEN, threaded=False)
+bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
 
