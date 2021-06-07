@@ -52,8 +52,8 @@ def main():
     dp.add_handler(CommandHandler("help", help))
 
     # on noncommand i.e message
-    dp.add_handler(MessageHandler(Filters.text, wrong_command))
     dp.add_handler(MessageHandler(Filters.regex(r'(?i)/s*task/s*1/s*'), task_1))
+    dp.add_handler(MessageHandler(Filters.text, wrong_command))
 
     # log all errors
     dp.add_error_handler(error)
