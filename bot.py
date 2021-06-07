@@ -1,94 +1,139 @@
-import logging
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
-import os
+import logging, os, re, json
 from dotenv import load_dotenv
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+from telegram.ext import (
+    Updater,
+    CommandHandler,
+    MessageHandler,
+    Filters,
+    ConversationHandler,
+    CallbackContext,
+)
 
-load_dotenv()
-PORT = int(os.environ.get('PORT', 8443))
-
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+)
 
 logger = logging.getLogger(__name__)
+
+load_dotenv()
 TOKEN = os.environ['API_KEY']
+PORT = int(os.environ.get('PORT', 80))
+NUM_OF_TASKS = int(os.environ.get('NUM_OF_TASKS', 0))
+TASK_QUESTION, TASK, FINISH = range(3)
+STATE = 1
+f = open('tasks.json')
+tasks = json.load(f)
+f.close()
 
-TASK_1, TASK_2 = range(2)
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
-def start(update, context):
-    """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+def start(update: Update, context: CallbackContext) -> int:
+  user = update.message.from_user
+  logger.info("%s started the game", user.first_name)
+    
+  reply_keyboard = [['Begin']]
 
-    return TASK_1
+  update.message.reply_text(
+    tasks['WELCOME']['text'],
+    reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True),
+  )
+  return TASK_QUESTION
 
-def help(update, context):
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
 
-def echo(update, context):
-    """Echo the user message."""
-    update.message.reply_text(update.message.text)
+def task_question(update: Update, context: CallbackContext) -> int:
+  user = update.message.from_user
+  logger.info("%s read task_%s question", user.first_name, STATE)
+    
+  update.message.reply_text(
+    tasks['TASK_{}'.format(STATE)]['question'],
+    reply_markup=ReplyKeyboardRemove(),
+  )
+  return TASK
 
-def wrong_command(update, context):
-    update.message.reply_text('Sorry, I don\'t know that.')
 
-def task_1(update, context):
-    update.message.reply_text('This is your first Task!')
+def task_hint(update: Update, context: CallbackContext) -> int:
+  user = update.message.from_user
+  logger.info("%s asked for hint at task_%s", user.first_name, STATE)
 
-    return TASK_2
+  update.message.reply_text(
+    tasks['TASK_{}'.format(STATE)]['hint'],
+    reply_markup=ReplyKeyboardRemove(),
+  )
+  return TASK
 
-def task_2(update, context):
-    update.message.reply_text('This is your first Task!')
 
-    ConversationHandler.END
+def task_solve(update: Update, context: CallbackContext) -> int:
+  user = update.message.from_user
+  global STATE
 
-def error(update, context):
-    """Log Errors caused by Updates."""
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
+  if(re.search(tasks['TASK_{}'.format(STATE)]['solution'], update.message.text)):
+    logger.info("%s solved task_%s", user.first_name, STATE)
+    
+    if(STATE == NUM_OF_TASKS):
+      logger.info("%s solved all the tasks", user.first_name)
 
-def main():
-    """Start the bot."""
-    # Create the Updater and pass it your bot's token.
-    # Make sure to set use_context=True to use the new context based callbacks
-    # Post version 12 this will no longer be necessary
-    updater = Updater(TOKEN, use_context=True)
+      reply_keyboard = [['Finish']]
+      update.message.reply_text(
+        'You solved all the tasks!',
+        reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True),
+      )
+      return FINISH
+        
+    reply_keyboard = [['Next']]
+    update.message.reply_text(
+      'You solved the task, press Next if you are ready for the next one!',
+      reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True),
+    )
+    STATE += 1
+    return TASK_QUESTION
 
-    # Get the dispatcher to register handlers
-    dp = updater.dispatcher
+  logger.info("%s typed a wrong answer for task_%s", user.first_name, STATE)
+  update.message.reply_text(
+    'Wrong answer!\n'
+    'If you need any help reply with \'Hint\'.\n'
+    'If you would like to read the question again, reply with \'Task\'.',
+    reply_markup=ReplyKeyboardRemove(),
+  )
+  return TASK
 
-    conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
-        fallbacks=[],
 
-        states={
-            TASK_1: [MessageHandler(Filters.regex(r'(?i)(\s+|^)task\s*1(\s+|$)'), task_1)],
-            TASK_2: [MessageHandler(Filters.regex(r'(?i)(\s+|^)task\s*2(\s+|$)'), task_2)],
-        },
+def finish(update: Update, context: CallbackContext) -> int:
+  update.message.reply_text('Congratulations!')
+  return ConversationHandler.END
+
+
+def main() -> None:
+  updater = Updater(TOKEN)
+
+  dispatcher = updater.dispatcher
+
+  conv_handler = ConversationHandler(
+    entry_points=[CommandHandler('start', start)],
+    states={
+      TASK_QUESTION: [MessageHandler(Filters.text, task_question)],
+      TASK: [
+        MessageHandler(Filters.regex(r'(?i)(TASK)$'), task_question),
+        MessageHandler(Filters.regex(r'(?i)(HINT)$'), task_hint),
+        MessageHandler(Filters.text, task_solve)
+      ],
+      FINISH: [MessageHandler(Filters.text, finish)]
+    },
+    fallbacks=[],
+  )
+
+  dispatcher.add_handler(conv_handler)
+
+  if(os.environ.get('IS_LOCAL', False)):
+    updater.start_polling()
+  else:
+    updater.start_webhook(
+      listen="0.0.0.0",
+      port=int(PORT),
+      url_path=TOKEN,
+      webhook_url='https://interesting-hedwig-bot.herokuapp.com/' + TOKEN
     )
 
-    dp.add_handler(conv_handler)
-    
-    # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help))
-
-    # on noncommand i.e message
-    dp.add_handler(MessageHandler(Filters.text, wrong_command))
-
-    # log all errors
-    dp.add_error_handler(error)
-
-    # Start the Bot
-    updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
-                          url_path=TOKEN,
-                          webhook_url='https://interesting-hedwig-bot.herokuapp.com/' + TOKEN)
-
-    # Run the bot until you press Ctrl-C or the process receives SIGINT,
-    # SIGTERM or SIGABRT. This should be used most of the time, since
-    # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
 
+
 if __name__ == '__main__':
-    main()
+  main()

@@ -1,0 +1,15 @@
+{
+  "WELCOME": {
+    "text": "Welcome!"
+  },
+  "TASK_1": {
+    "question": "First question",
+    "hint": "First hint",
+    "solution": "1234"
+  },
+  "TASK_2": {
+    "question": "Second question",
+    "hint": "Second hint",
+    "solution": "4321"
+  }
+}
