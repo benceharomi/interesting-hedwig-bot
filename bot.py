@@ -27,6 +27,8 @@ tasks = json.load(f)
 f.close()
 
 def start(update: Update, context: CallbackContext) -> int:
+  global STATE
+  STATE = 1
   user = update.message.from_user
   logger.info("%s started the game", user.first_name)
     
