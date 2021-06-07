@@ -1,5 +1,5 @@
 import logging
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 import os
 from dotenv import load_dotenv
 
@@ -13,11 +13,14 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 TOKEN = os.environ['API_KEY']
 
+TASK_1, TASK_2 = range(2)
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
     """Send a message when the command /start is issued."""
     update.message.reply_text('Hi!')
+
+    return TASK_1
 
 def help(update, context):
     """Send a message when the command /help is issued."""
@@ -33,6 +36,13 @@ def wrong_command(update, context):
 def task_1(update, context):
     update.message.reply_text('This is your first Task!')
 
+    return TASK_2
+
+def task_2(update, context):
+    update.message.reply_text('This is your first Task!')
+
+    ConversationHandler.END
+
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -47,12 +57,23 @@ def main():
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start)],
+        fallbacks=[],
+
+        states={
+            TASK_1: [MessageHandler(Filters.regex(r'(?i)(\s+|^)task\s*1(\s+|$)'), task_1)],
+            TASK_2: [MessageHandler(Filters.regex(r'(?i)(\s+|^)task\s*2(\s+|$)'), task_2)],
+        },
+    )
+
+    dp.add_handler(conv_handler)
+    
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
 
     # on noncommand i.e message
-    dp.add_handler(MessageHandler(Filters.regex(r'(?i)(\s+|^)task\s*1(\s+|$)'), task_1))
     dp.add_handler(MessageHandler(Filters.text, wrong_command))
 
     # log all errors
