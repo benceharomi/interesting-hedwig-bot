@@ -102,6 +102,15 @@ def finish(update: Update, context: CallbackContext) -> int:
   update.message.reply_text('Congratulations!')
   return ConversationHandler.END
 
+def cancel(update: Update, context: CallbackContext) -> int:
+    user = update.message.from_user
+    logger.info("User %s canceled the game.", user.first_name)
+    update.message.reply_text(
+        'I\'m sorry to hear that you canceled the game. :(\n'
+        'Come back and try it again later!', reply_markup=ReplyKeyboardRemove()
+    )
+
+    return ConversationHandler.END
 
 def main() -> None:
   updater = Updater(TOKEN)
@@ -119,7 +128,7 @@ def main() -> None:
       ],
       FINISH: [MessageHandler(Filters.text, finish)]
     },
-    fallbacks=[],
+    fallbacks=[CommandHandler('cancel', cancel)],
   )
 
   dispatcher.add_handler(conv_handler)
