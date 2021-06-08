@@ -1,15 +1,65 @@
 {
   "WELCOME": {
-    "text": "Welcome!"
+    "text": "Welcome!\n I will not introduce myself until I'm not sure that I can trust you. To know that I can trust you, you must pass my challenge. I'm going to send you all the instructions, if you need any help just write a letter and give it to Hedwig who will deliver it to me. I cannot take the risk to let someone else understand the instructions besides you, thus in every letter if I say to go left then go right and vice versa. As you may have become accustomed to, SHOUT at all times and keep the answers tight.\nIf you are ready reply with BEGIN."
   },
   "TASK_1": {
-    "question": "First question",
-    "hint": "First hint",
-    "solution": "1234"
+    "question": "My helpers showed you the starting point so here is the first task: If you join the company of flat people and look above a manager then you find two letters between the lines. Which are these letters?",
+    "hint": "The flat people maybe hide behind something.",
+    "solution": "AN"
   },
   "TASK_2": {
-    "question": "Second question",
-    "hint": "Second hint",
-    "solution": "4321"
-  }
+    "question": "You solved the first one, but I have some more in my bag. Here is the next one:\n Which number is between 4 and 153?\nA little help: you don't have to go far away from your flat friends.",
+    "hint": "You don't know? And if I say that 153 is followed by N19?",
+    "solution": "19"
+  },
+  "TASK_3": {
+    "question": "Now you have to start walking. Go further between Rowan and Mento until you reach the land of weight between an underground and a chicken. What is the name of the land?",
+    "hint": "What if I say that the weight is a pound?",
+    "solution": "POUNDLAND"
+  },
+  "TASK_4": {
+    "question": "So if you are there then go le... I mean right. Don't blame me. It is hard for me too to get used to it. Back to the subject. I left you a ticket at CCLXXXIV. My phone number is on it. What is my number?",
+    "hint": "It is on a black door in a black house.",
+    "solution": "07739421036"
+  },
+  "TASK_5": {
+    "question": "Quick question. What is the name of the pub on which you found the door?",
+    "hint": "I don't know what to help here.",
+    "solution": "THEBLACKSTOCK"
+  },
+  "TASK_6": {
+    "question": "There is a road next to the pub with the same name, follow that. This gonna be a longer walk, don't worry, if later you will see a yellow door, right in front of you, you are in the right direction. Not because I don't trust you but I have to ask something here too, so what is the number on my favorite door?",
+    "hint": "I don't know what to help here.",
+    "solution": "1"
+  },
+  "TASK_7": {
+    "question": "Go until you see the rooster in the sunlight then turn right. Go straight until you find Colombus. What animal is Colombus?",
+    "hint": "It's kind of a bird.",
+    "solution": "PIGEON"
+  },
+  "TASK_8": {
+    "question": "Do not stop till you reach the Clissfold Park. Find the fountain and tell me John's last name.",
+    "hint": "If you found the fountain then you should know.",
+    "solution": "RUNTZ"
+  },
+  "TASK_9": {
+    "question": "How many years were between the sunrise and the sunset?",
+    "hint": "I would look for something with four legs.",
+    "solution": "21"
+  },
+  "TASK_10": {
+    "question": "How many years were between the sunrise and the sunset?",
+    "hint": "I would look for something with four legs.",
+    "solution": "21"
+  },
+  "TASK_11": {
+    "question": "You should see a church, go towards that, and tell me how Buck's and Doe's child could be called?",
+    "hint": "I would look for something with four legs.",
+    "solution": "KID"
+  },
+  "TASK_12": {
+    "question": "Now straight to the church. I like iced coffee, could you tell me on which floor I can get one?",
+    "hint": "Are there any posters with coffee?.",
+    "solution": "13TH"
+  },
 }
