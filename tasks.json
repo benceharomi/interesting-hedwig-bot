@@ -8,7 +8,7 @@
     "solution": "AN"
   },
   "TASK_2": {
-    "question": "You solved the first one, but I have some more in my bag. Here is the next one:\nWhich number is between 4 and 153?\nA little help: you don't have to go far away from your flat friends.",
+    "question": "You solved the first one, but I have some more in my bag. Here is the next:\nWhich number is between 4 and 153?\nA little help: you don't have to go far away from your flat friends.",
     "hint": "You don't know? And if I say that 153 is followed by N19?",
     "solution": "19"
   },
@@ -58,13 +58,43 @@
     "solution": "13TH"
   },
   "TASK_12": {
-    "question": "",
-    "hint": "",
-    "solution": "1"
+    "question": "Look at your map and search for a bar named after a poet. What is this poet's last name?",
+    "hint": "It starts with S",
+    "solution": "SHAKESPEARE"
   },
   "TASK_13": {
+    "question": "Now I have to go, you need to be on your own a bit. If you are at the bar go south on the poet's walk.",
+    "hint": "Use maps.",
+    "solution": "1"
+  },
+  "TASK_14": {
+    "question": "When you are between to fields made of green butter, go in to the one on your right! What's history you see?",
+    "hint": "Look for parks.",
+    "solution": "ORCHARD"
+  },
+  "TASK_15": {
     "question": "What is common in Bramley and Beth?",
     "hint": "I like fruits.",
     "solution": "SEPTEMBER"
+  },
+  "TASK_16": {
+    "question": "Head East until you find a bridge. Go over it and go all the way to the prince. Who is the prince?",
+    "hint": "Use maps.",
+    "solution": "GEORGE"
+  },
+  "TASK_17": {
+    "question": "Go to place where the Prince meets Newington. What is after Belgrade?",
+    "hint": "Use maps.",
+    "solution": "PRINCESS"
+  },
+  "TASK_18": {
+    "question": "Follow the road, if you see a place where beer made from dogs on your left, you are in the right direction.",
+    "hint": "Use maps.",
+    "solution": "PRINCESS"
+  },
+  "TASK_19": {
+    "question": "You see a man in black disappear in front of you between a blue breast and Koray. That was me. Follow me. What is the name of the place where I went in?",
+    "hint": "Use maps.",
+    "solution": "CAULDRON"
   }
 }
