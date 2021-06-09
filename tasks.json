@@ -63,13 +63,13 @@
     "solution": "SHAKESPEARE"
   },
   "TASK_13": {
-    "question": "Now I have to go, you need to be on your own a bit. If you are at the bar go south on the poet's walk.",
+    "question": "Now I have to go, you need to be on your own a bit. If you are at the bar go south on the poet's walk. On what road is the bar?",
     "hint": "Use maps.",
-    "solution": "1"
+    "solution": "ALLEN"
   },
   "TASK_14": {
-    "question": "When you are between to fields made of green butter, go in to the one on your right! What's history you see?",
-    "hint": "Look for parks.",
+    "question": "When you are between fields made of green butter, go in to the one on your right! What's history you see?",
+    "hint": "Look for a board.",
     "solution": "ORCHARD"
   },
   "TASK_15": {
@@ -84,11 +84,11 @@
   },
   "TASK_17": {
     "question": "Go to place where the Prince meets Newington. What is after Belgrade?",
-    "hint": "Use maps.",
+    "hint": "Look for roads.",
     "solution": "PRINCESS"
   },
   "TASK_18": {
-    "question": "On which road is the destination?",
+    "question": "Go to the destination. On which road is it?",
     "hint": "Apple",
     "solution": "NEWINGTON"
   },
