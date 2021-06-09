@@ -88,12 +88,12 @@
     "solution": "PRINCESS"
   },
   "TASK_18": {
-    "question": "Follow the road, if you see a place where beer made from dogs on your left, you are in the right direction.",
-    "hint": "Use maps.",
-    "solution": "PRINCESS"
+    "question": "On which road is the destination?",
+    "hint": "Apple",
+    "solution": "NEWINGTON"
   },
   "TASK_19": {
-    "question": "You see a man in black disappear in front of you between a blue breast and Koray. That was me. Follow me. What is the name of the place where I went in?",
+    "question": "You see a man in black disappear in front of you. That was me. Follow me. What is the name of the place where I went in?",
     "hint": "Use maps.",
     "solution": "CAULDRON"
   }
